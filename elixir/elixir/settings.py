@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'doctor',
     'patient',
+    'appointment',
+    'users',
+    'record',
+    'treatment',
 ]
 
 MIDDLEWARE_CLASSES = [
