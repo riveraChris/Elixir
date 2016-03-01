@@ -13,32 +13,32 @@ class Record(models.Model):
 	modified_DT = models.DateField()
 	
 class Note(models.Model):
-	created_by = models.ForeignKey(Users)
+	created_by = models.CharField(max_length = 30)
 	created_dt = models.DateField()
 	created_tm = models.TimeField()
-	received_Place = models.CharField(max_length = 30, choices = RECEIVED_PLACE)
-	received_State = models.CharField(max_length = 30, choices = RECEIVED_STATE)
-	service_Food = models.CharField(max_length = 30, choices = SERVICE_FOOD)
-	returned_Type = models.CharField(max_length = 30, choices = RECEIVED_PLACE)
+	received_Place = models.CharField(max_length = 30, default = 'Cuarto')
+	received_State = models.CharField(max_length = 30, default = 'Despierto')
+	service_Food = models.CharField(max_length = 30, default = 'Desayuno')
+	returned_Type = models.CharField(max_length = 30, default = 'Cuarto')
 	diaper = models.CharField(max_length = 10, null = True)
 	evacuations = models.CharField(max_length = 10, null = True)
 	milk = models.CharField(max_length = 10, null = True)
 	snack = models.CharField(max_length = 10, null = True)
 	hygiene = models.CharField(max_length = 10, null = True)
 	comments = models.CharField(max_length = 255, null = True)
-
-	RECEIVED_PLACE = (
-		('Cuarto','Cuarto'),
-		('Sala','Sala'),
-		('Comedor','Comedor'),
-		('Area de Juegos','Area de Juegos'),
+	
+	RECEIVEDPLACE = (
+			('Cuarto','Cuarto'),
+			('Sala','Sala'),
+			('Comedor','Comedor'),
+			('Area de Juegos','Area de Juegos'),
 		)
-	RECEIVED_STATE = (
-		('Dormido','Dormido'), 
-		('Despierto','Despiero'),
+	RECEIVEDSTATE = (
+			('Dormido','Dormido'), 
+			('Despierto','Despierto'),
 		)
-	SERVICE_FOOD = (
-		('Desayuno','Desayuno'),
-		('Almuerzo','Almuerzo'),
-		('Cena','Cena'),
+	SERVICEFOOD = (
+			('Desayuno','Desayuno'),
+			('Almuerzo','Almuerzo'),
+			('Cena','Cena'),
 		)
