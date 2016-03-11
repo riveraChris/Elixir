@@ -1,0 +1,32 @@
+body {
+    background-color: #ECF0F1;
+    color: #3A3A3A;    
+}
+
+.jumbotron{
+background-color: #FFFFFF !important;
+/*background-color:none !important;*/
+}
+
+.Center-Container {
+  position: relative;
+}
+
+.Absolute-Center {
+  width: 40%;
+  height: 85%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+#btn{
+	background-color: #3A3A3A !important;
+	border-color: #3A3A3A;
+}
+
+#logo{
+	width: 60%;
+	height: 60%;
+}

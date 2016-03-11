@@ -4,11 +4,11 @@ from django.db import models
 
 class Record(models.Model):
 	height = models.FloatField()
-	wheight = models.FloatField()
+	weight = models.FloatField()
 	condition_1 = models.CharField(max_length = 30, null = True)
 	condition_2 = models.CharField(max_length = 30, null = True)
 	condition_3 = models.CharField(max_length = 30, null = True)
-	observations = models.CharField(max_length = 255, null = True)
+	more_info = models.CharField(max_length = 255, null = True)
 	modified_By = models.PositiveIntegerField()
 	modified_DT = models.DateField()
 	
