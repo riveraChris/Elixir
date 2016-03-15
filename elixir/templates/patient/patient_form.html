@@ -2,7 +2,6 @@
 {% load staticfiles %}
 {% load bootstrap_tags %}
 
-
  {% block navbar-content %}
     <li><a href="#">Dashboard</a></li>
     <li><a href="#">Settings</a></li>
@@ -34,19 +33,13 @@
     <div class="jumbotron">
       <div class="container">
         <form class="form-horizontal" method="post">
-          {% for patient in object_list %}
-            <tr>
-              <td><a href="{{ patient.get_absolute_url }}">{{ patient.pk }}</a></td>
-              <td>{{ patient.name }}</td>
-              <td>{{ patient.first_last_name }}</td>
-              <td>{{ patient.second_lastname }}</td>
-              <td>{{ patient.age }}</td>
-              <td>
-                <a class="btn btn-default btn-xs" href="{% url 'edit_appointment' appointment.pk %}">Edit</a>
-                <a class="btn btn-xs btn-danger" href="{% url 'delete_appointment' appointment.pk %}">Delete</a>
-              </td>
-            </tr>
-          {% endfor %}
+          {% csrf_token %}
+          {{ form|as_bootstrap_horizontal }}
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <a href="#back" class="btn btn-default">Cancel</a>
+              <button type="submit" class="btn btn-primary">
+                Create patient
               </button>
             </div>
           </div>
