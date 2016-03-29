@@ -22,8 +22,6 @@ class PatientCreateView(SuccessMessageMixin, CreateView):
     model = Patient
     fields = ['name', 'mid_name', 'first_last_name', 'second_last_name', 'birthdate','age','sex','address1','address2','city','state','zipcode','phone']
     success_message = 'Appointment successfully created.'
-    success_url = reverse_lazy('new_patient')
-
 
 class PatientUpdateView(SuccessMessageMixin, UpdateView):
     model = Patient
@@ -33,13 +31,5 @@ class PatientUpdateView(SuccessMessageMixin, UpdateView):
 
 class PatientDeleteView(DeleteView):
     model = Patient
-    success_url = reverse_lazy('list_appointments')
+    success_url = reverse_lazy('dash')
 
-
-
-#def new_patient(request):
-#	if not request.user.is_authenticated():
-#		return redirect("/login")
-#if request.user.type == 'professor':
-#	return redirect('/dashboard')
-#	return render_to_response('../templates/patient/new_patient.html', context_instance=RequestContext(request))

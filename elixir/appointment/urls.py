@@ -6,7 +6,7 @@ from .views import AppointmentListView, AppointmentCreateView, AppointmentDetail
 urlpatterns = [
     # List and detail views
     url(r'^list/$', AppointmentListView.as_view(), name='list_appointments'),
-    url(r'^(?P<pk>[0-9]+)$', AppointmentDetailView.as_view(), name='view_appointment'),
+    url(r'^(?P<pk>[0-9]+)/view_app$', AppointmentDetailView.as_view(), name='view_appointment'),
 
     # Create, update, delete
     url(r'^new$', AppointmentCreateView.as_view(), name='new_appointment'),

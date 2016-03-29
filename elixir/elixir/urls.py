@@ -6,9 +6,10 @@ urlpatterns = [
     url(r'^', include('users.urls')),
     url(r'^', include('appointment.urls')),
     url(r'^', include('patient.urls')),
+    url(r'^', include('record.urls')),
     
 
     # Include the Django admin
     url(r'^admin/', include(admin.site.urls)),
-    url('^', include('django.contrib.auth.urls')),
+    url(r'^', include('django.contrib.auth.urls')),
 ]
