@@ -56,10 +56,10 @@ class Record(models.Model):
 	modified_DT = models.DateField(blank=True, null=True)
 
 	def get_absolute_url(self):
-		return reverse('dash')
-
+		return reverse('update_record', args=[str(self.id)])
+		
 	def __str__(self):
-		return 'id={0}'.format(self.id)
+		return 'Record Number {0}'.format(self.id)
 	
 class Note(models.Model):
 	created_by = models.CharField(max_length = 30)

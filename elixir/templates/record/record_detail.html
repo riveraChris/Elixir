@@ -1,0 +1,143 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+
+{% block navbar-content %}
+    <li><a href="#">Dashboard</a></li>
+    <li><a href="#">Settings</a></li>
+    <li><a href="#">Profile</a></li>
+    {% if user.is_authenticated %}
+      <li class="dropdown" >
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.first_name }}{{user.last_name}} <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li role="separator" class="divider"></li>
+          <li class="dropdown-header"></li>
+          <li><a href="{% url 'logout' %}">Log out</a></li>
+        </ul>
+      </li>
+      {% else %}
+      <li><a href="{% url 'login' %}">Login</a></li>
+    {% endif %}
+  {% endblock navbar-content %}
+  
+  {% block sidebar-content %}
+    <li><a href="{% url 'dash' %}">Dashboard</a></li>
+    <li class="active"><a href="{% url 'new_patient' %}">New Patient<span class="sr-only">(current)</span></a></li>
+    <li><a href="{% url 'view_record'%}">Use a Record</a></li>
+    <li><a href="#">View a Record</a></li>
+    <li><a href="#">Edit a Redord</a></li>
+  {% endblock sidebar-content %}
+
+
+{% block fluid-content %}
+      
+    <div class="jumbotron">
+      <div class="container">
+        <h2>{{ record.patient.name }} {{ record.patient.first_last_name }} {{ record.patient.second_last_name }}</h2>
+       
+        <hr>
+        <br>
+
+        <div class="row" >
+          <div class="col-lg-6" >
+            <h4> Medical Insurance </h4>
+          </div>
+          <div class="col-lg-6" >
+            <h4> Insurance Number </h4>
+          </div>
+        </div>
+
+        <div class="row" >
+          <div class="col-lg-6" >
+            <p> {{ record.medical_plan_name }} </p>
+          </div>
+          <div class="col-lg-6" >
+            <p> {{ record.medical_plan_number }} </p>
+          </div>
+        </div>
+
+         <div class="row" >
+          <div class="col-lg-3" >
+            <h4> Age </h4>
+          </div>
+          <div class="col-lg-3" >
+            <h4> Sex </h4>
+          </div>
+          <div class="col-lg-3" >
+            <h4> Height </h4>
+          </div>
+          <div class="col-lg-3" >
+            <h4> Weight </h4>
+          </div>
+        </div>
+
+        <div class="row" >
+          <div class="col-lg-3" >
+            <p> {{ record.patient.age }} </p>
+          </div>
+          <div class="col-lg-3" >
+            <p> {{ record.patient.sex }} </p>
+          </div>
+          <div class="col-lg-3" >
+            <p> {{ record.height }} </p>
+          </div>
+          <div class="col-lg-3" >
+            <p> {{ record.weight }} </p>
+          </div>
+        </div>
+
+        <div class="row" >
+          <div class="col-lg-12" >
+            <h4> Conditions: </h4>
+          </div>
+        </div>
+
+        <div class="row" >
+          <div class="col-lg-12" >
+          {% if not record.condition_1 %}
+            <p> There's no conditions registered yet </p>
+            {% else %}
+              <div class="col-lg-4" >
+                <p>{{ record.condition_1 }}</p>
+              </div>
+              <div class="col-lg-4" >
+                <p>{{ record.condition_2 }}</p>
+              </div>
+              <div class="col-lg-4" >
+                <p>{{ record.condition_3 }}</p>
+              </div>
+          {% endif %}
+          </div>
+        </div>
+
+        <div class="row" >
+          <div class="col-lg-12" >
+            <h4> More Info: </h4>
+          </div>
+        </div>
+
+        <div class="row" >
+          <div class="col-lg-12" >
+          {% if not record.more_info %}
+            <p> There's no aditional info </p>
+            {% else %}
+              <div class="col-lg-12" >
+                <p>{{ record.more_info }}</p>
+              </div>
+          {% endif %}
+          </div>
+        </div>
+        <br>
+        <br>
+        <div class="row" >
+          <div class="pull-right">
+            <h5> This record was created by: {{ record.created_By }}</h5>
+            {% if not record.modified_By %}
+              {% else %}
+                <h5> and modified by: {{ record.modified_By }}</h5>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

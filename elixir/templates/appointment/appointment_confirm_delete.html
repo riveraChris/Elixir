@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block page_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/dash.css' %}">
+{% endblock %}
+
+{% block content %}
+	<nav class="navbar navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'dash' %}"><img src="{% static 'imgs/elixir_name.png' %}" class="img-responsive" id="name"></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+          	<li><a href="#">Settings</a></li>
+			    {% if user.is_authenticated %}
+			      <li class="dropdown" >
+			        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
+			        <ul class="dropdown-menu">
+			          <li><a href="#">Profile</a></li>
+			          <li role="separator" class="divider"></li>
+			          <li class="dropdown-header"></li>
+			          <li><a href="{% url 'logout' %}">Log out</a></li>
+			        </ul>
+			      </li>
+			      {% else %}
+			      <li><a href="{% url 'login' %}">Login</a></li>
+			    {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="row">
+    	<br>
+    	<br>
+    </div>
+	
+	<div class="jumbotron">
+		<div class="container">
+			<div class="row">
+				<div>
+					<h3>Warning !</h3>
+				</div>
+			</div>
+			<form class="form-horizontal" method="post">{% csrf_token %}
+    			<p>Are you sure you want to delete "{{ object }}"?</p>
+    			<br>
+                <button type="submit" class="btn btn-primary pull-right">Confirm</button>
+			</form>
+		</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="../../assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+{% endblock %}

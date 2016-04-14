@@ -7,35 +7,26 @@ from django.views.generic.list import ListView
 from .models import Appointment
 
 class AppointmentListView(ListView):
-    """Shows users a list of appointments"""
-
     model = Appointment
+    
 
 
 class AppointmentDetailView(DetailView):
-    """Shows users a single appointment"""
-
     model = Appointment
-
+    context_object_name = 'app'
 
 class AppointmentCreateView(SuccessMessageMixin, CreateView):
-    """Powers a form to create a new appointment"""
-
     model = Appointment
     fields = ['name', 'phone_number', 'time', 'time_zone']
     success_message = 'Appointment successfully created.'
 
 
 class AppointmentUpdateView(SuccessMessageMixin, UpdateView):
-    """Powers a form to edit existing appointments"""
-
     model = Appointment
     fields = ['name', 'phone_number', 'time', 'time_zone']
     success_message = 'Appointment successfully updated.'
 
 
 class AppointmentDeleteView(DeleteView):
-    """Prompts users to confirm deletion of an appointment"""
-
     model = Appointment
     success_url = reverse_lazy('list_appointments')

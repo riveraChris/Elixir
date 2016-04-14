@@ -1,0 +1,55 @@
+
+{% extends 'base.html'%}
+{% load staticfiles %}
+
+{% block page_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+  {% if errors in messages%}
+    <div class="alert alert-dismissable alert-danger">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Oh snap!</strong> {{ errors }}
+    </div>
+  {% endif %}
+  <div class="jumbotron Absolute-Center">
+    <div class="container">
+       <div id = "login">
+          <center><img src="{% static 'imgs/elixir.png' %}" class="img-responsive" id="logo"></center>
+          <form class = "form-horizontal" name = "loginForm" action="/login/" method="POST" role="form">
+            {% csrf_token %}
+            {% if next %}
+              <input type="hidden" name="next" value="{{ next }}">
+            {% endif %} 
+            <div class="control-group">
+              <label class="control-label" for="username">Username</label>
+              <div class="controls">
+                <input class="form-control" type="text" name="username" id="username" placeholder="Username">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="passwrond">Password</label>
+              <div class="controls">
+                <input class="form-control" type="password" name="password" id="password" placeholder="Password">
+              </div>
+            </div>
+              <a href="#" class="pull-right">Forgot your password?</a>
+            <br><br><br>
+            <div class="control-group">
+              <div class="controls">
+                <button type="submit" class="btn btn-lg btn-primary btn-block" id="btn">Login</button>
+              </div>
+            </div>
+          </form>
+          <br><br>
+          <center><a href="#">Don't Have an Account?</a></center>
+        </div>  
+    </div>
+  </div>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+{% endblock %}
