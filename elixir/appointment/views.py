@@ -17,13 +17,13 @@ class AppointmentDetailView(DetailView):
 
 class AppointmentCreateView(SuccessMessageMixin, CreateView):
     model = Appointment
-    fields = ['name', 'phone_number', 'time', 'time_zone']
+    fields = ['name', 'phone_number', 'time', 'time_zone', 'treatment']
     success_message = 'Appointment successfully created.'
 
 
 class AppointmentUpdateView(SuccessMessageMixin, UpdateView):
     model = Appointment
-    fields = ['name', 'phone_number', 'time', 'time_zone']
+    fields = ['name', 'phone_number', 'time', 'time_zone', 'treatment']
     success_message = 'Appointment successfully updated.'
 
 

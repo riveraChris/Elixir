@@ -22,7 +22,7 @@ class PatientCreateView(SuccessMessageMixin, CreateView):
     model = Patient
     context_object_name = 'patient'
     template_name = 'patient/patient_form.html'
-    fields = ['name', 'mid_name', 'first_last_name', 'second_last_name', 'birthdate','age','sex','address1','address2','city','state','zipcode','phone']
+    fields = ['name', 'mid_name', 'first_last_name', 'second_last_name', 'birthdate','age','sex','address1','address2','city','state','zipcode','phone', 'doctor']
     success_message = 'Patient successfully created.'
 
 class PatientUpdateView(SuccessMessageMixin, UpdateView):

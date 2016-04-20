@@ -23,14 +23,14 @@ class Patient(models.Model):
 	state = models.CharField(max_length = 2)
 	zipcode = models.PositiveIntegerField()
 	phone = models.CharField(max_length = 20, blank=True, null=True)
-	doctor = models.ForeignKey(Doctor, blank=True, null=True)
-	appointment = models.ForeignKey(Appointment, blank=True, null=True)
+	doctor = models.ForeignKey(Doctor)
+	
 
 	def get_absolute_url(self):
 		return reverse('update_record', args=[str(self.id)])
 
 	def __str__(self):
-		return self.name
+		return self.name + ' ' + self.first_last_name
 
 def record_save(sender, instance, created, *args, **kwargs):
 	patient = instance
@@ -39,27 +39,6 @@ def record_save(sender, instance, created, *args, **kwargs):
 	new_rec.save()
 
 post_save.connect(record_save, sender = Patient)
-
-class Record(models.Model):
-	patient = models.OneToOneField(Patient)
-	medical_plan_name = models.CharField(max_length = 30, blank=True, null=True)
-	medical_plan_number = models.CharField(max_length = 30, blank=True, null=True)
-	height = models.FloatField(blank=True, null=True)
-	weight = models.FloatField(blank=True, null=True)
-	condition_1 = models.CharField(max_length = 30, blank=True, null=True)
-	condition_2 = models.CharField(max_length = 30, blank=True, null=True)
-	condition_3 = models.CharField(max_length = 30, blank=True, null=True)
-	more_info = models.CharField(max_length = 255, blank=True, null=True)
-	created_By = models.ForeignKey(User, related_name = 'user', blank=True, null=True)
-	created_DT = models.DateField(default = datetime.date.today(), blank=True, null=True)
-	modified_By = models.ForeignKey(User, blank=True, null=True)
-	modified_DT = models.DateField(blank=True, null=True)
-
-	def get_absolute_url(self):
-		return reverse('update_record', args=[str(self.id)])
-		
-	def __str__(self):
-		return 'Record Number {0}'.format(self.id)
 	
 class Note(models.Model):
 	created_by = models.CharField(max_length = 30)
@@ -91,3 +70,26 @@ class Note(models.Model):
 			('Almuerzo','Almuerzo'),
 			('Cena','Cena'),
 		)
+
+class Record(models.Model):
+	patient = models.OneToOneField(Patient)
+	medical_plan_name = models.CharField(max_length = 30, blank=True, null=True)
+	medical_plan_number = models.CharField(max_length = 30, blank=True, null=True)
+	height = models.FloatField(blank=True, null=True)
+	weight = models.FloatField(blank=True, null=True)
+	condition_1 = models.CharField(max_length = 30, blank=True, null=True)
+	condition_2 = models.CharField(max_length = 30, blank=True, null=True)
+	condition_3 = models.CharField(max_length = 30, blank=True, null=True)
+	more_info = models.CharField(max_length = 255, blank=True, null=True)
+	appointment = models.ForeignKey(Appointment, blank=True, null=True)
+	note = models.ForeignKey(Note, blank=True, null=True)
+	created_By = models.ForeignKey(User, related_name = 'user', blank=True, null=True)
+	created_DT = models.DateField(default = datetime.date.today(), blank=True, null=True)
+	modified_By = models.ForeignKey(User, blank=True, null=True)
+	modified_DT = models.DateField(blank=True, null=True)
+
+	def get_absolute_url(self):
+		return reverse('update_record', args=[str(self.id)])
+		
+	def __str__(self):
+		return 'Record Number {0}'.format(self.id)

@@ -1,0 +1,84 @@
+
+{% extends 'base.html'%}
+{% load staticfiles %}
+
+{% block page_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/menu.css' %}">
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'dash' %}"><img src="{% static 'imgs/elixir_name.png' %}" class="img-responsive" id="name"></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Settings</a></li>
+              {% if user.is_authenticated %}
+                <li class="dropdown" >
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Profile</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-header"></li>
+                    <li><a href="{% url 'logout' %}">Log out</a></li>
+                  </ul>
+                </li>
+                {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+              {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <br>
+    <br>
+    <div class="jumbotron">
+      <div class="container">
+        <div class="row">
+          <center><img src="{% static 'imgs/slogan.png' %}" class="img-responsive" alt="Image" id="slogan"></center>      
+        </div>
+        <br>
+        <br>
+        <div class="row">
+          <div class="col-lg-4">
+            <center><a href="{% url 'new_patient' %}"><img src="{% static 'imgs/addbtn.png' %}" class="img-responsive" alt="Image" id="add"></a></center>   
+          </div>
+          <div class="col-lg-4">
+            <center><a href="{% url 'view_record' %}"><img src="{% static 'imgs/searchbtn.png' %}" class="img-responsive" alt="Image" id="search"></a></center>
+          </div>
+          <div class="col-lg-4">
+            <center><a href="{% url 'new_appointment' %}"><img src="{% static 'imgs/appbtn.png' %}" class="img-responsive" alt="Image" id="app"></a></center>   
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="../../assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+{% endblock %}
+
+{% block page_js %}
+{% endblock %}
+
