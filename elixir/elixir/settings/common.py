@@ -51,6 +51,7 @@ THIRD_PARTY_APPS = (
     'django_forms_bootstrap',
     'timezone_field',
     'django_extensions',
+    'django_filters',
     'annoying',
 )
 

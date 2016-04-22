@@ -19,8 +19,7 @@
   {% endblock navbar-content %}
   
   {% block sidebar-content %}
-    <li><a href="{% url 'dash' %}">Dashboard</a></li>
-    <hr>
+    <br>
     <li><a href="{% url 'new_patient' %}">New Patient</a></li>
     <li><a href="{% url 'view_record'%}">Patients List</a></li>
     <li class="active"><a href="{% url 'new_appointment'%}">New Appointment<span class="sr-only">(current)</span></a></li>

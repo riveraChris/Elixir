@@ -2,7 +2,23 @@
 {% load staticfiles %}
 
 {% block navbar-content %}
-    <li><a href="#">Dashboard</a></li>
+    <li>
+      <form class="navbar-form" id='searchform'>
+        <input type="text" name="name" id="name" style="width: 150px" placeholder="Search Patient">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form> 
+    <li>
+
+    <script type="text/javascript">
+      $(function(){
+      $("name").keyup(function(event){
+        if(event.which == 13){
+          document.searchform.submit();
+          }
+      });
+
+    </script>
+
     <li><a href="#">Settings</a></li>
     <li><a href="#">Profile</a></li>
     {% if user.is_authenticated %}
@@ -20,11 +36,11 @@
   {% endblock navbar-content %}
   
   {% block sidebar-content %}
-    <li><a href="{% url 'dash' %}">Dashboard</a></li>
-    <li class="active"><a href="{% url 'new_patient' %}">New Patient<span class="sr-only">(current)</span></a></li>
-    <li><a href="{% url 'view_record'%}">Use a Record</a></li>
-    <li><a href="#">View a Record</a></li>
-    <li><a href="#">Edit a Redord</a></li>
+    <br>
+    <li><a href="{% url 'new_patient' %}">New Patient</a></li>
+    <li class="active"><a href="{% url 'view_record'%}">Patients List<span class="sr-only">(current)</span></a></li>
+    <li><a href="{% url 'new_appointment'%}">New Appointment</a></li>
+    <li><a href="{% url 'list_appointments'%}">Appointment List</a></li>
   {% endblock sidebar-content %}
 
 

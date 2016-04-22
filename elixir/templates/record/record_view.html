@@ -1,6 +1,23 @@
 {% extends "dashboard.html" %}
 
 {% block navbar-content %}
+    <li>
+      <form class="navbar-form" id='searchform'>
+        <input type="text" name="name" id="name" style="width: 150px" placeholder="Search Patient">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form> 
+    <li>
+
+    <script type="text/javascript">
+      $(function(){
+      $("name").keyup(function(event){
+        if(event.which == 13){
+          document.searchform.submit();
+          }
+      });
+
+    </script>
+
     <li><a href="#">Settings</a></li>
     {% if user.is_authenticated %}
       <li class="dropdown" >
@@ -18,8 +35,7 @@
   {% endblock navbar-content %}
   
   {% block sidebar-content %}
-    <li><a href="{% url 'dash' %}">Dashboard</a></li>
-    <hr>
+    <br>
     <li><a href="{% url 'new_patient' %}">New Patient</a></li>
     <li class="active"><a href="{% url 'view_record'%}">Patients List<span class="sr-only">(current)</span></a></li>
     <li><a href="{% url 'new_appointment'%}">New Appointment</a></li>
@@ -55,7 +71,7 @@
                     <td><a href="{{ patient.get_absolute_url }}">{{ patient.pk }}</a></td>
                     <td>{{ patient.name }} {{ patient.first_last_name }} {{ patient.second_last_name }}</td>
                     <td>{{ patient.birthdate }}</td>
-                    <td>ok</td>
+                    <td>{{ patient.doctor }}</td>
                     <td>
                       <a class="btn btn-default btn-xs" href="{% url 'update_record' patient.pk %}">Edit</a>
                       <a class="btn btn-xs btn-success" href="{% url 'detail_record' patient.pk %}">Details</a>

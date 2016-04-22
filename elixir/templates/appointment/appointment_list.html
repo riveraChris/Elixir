@@ -20,8 +20,7 @@
   {% endblock navbar-content %}
   
   {% block sidebar-content %}
-    <li><a href="{% url 'dash' %}">Dashboard</a></li>
-    <hr>
+    <br>
     <li><a href="{% url 'new_patient' %}">New Patient</a></li>
     <li><a href="{% url 'view_record'%}">Patients List</a></li>
     <li><a href="{% url 'new_appointment'%}">New Appointment</a></li>
@@ -60,7 +59,7 @@
               {% for appointment in object_list %}
                 <tr>
                   <td><a href="{{ appointment.get_absolute_url }}">{{ appointment.pk }}</a></td>
-                  <td>{{ appointment.name }}</td>
+                  <td>{{ appointment.Patient }}</td>
                   <td>{{ appointment.phone_number }}</td>
                   <td>{{ appointment.time }}</td>
                   <td>{{ appointment.created }}</td>
