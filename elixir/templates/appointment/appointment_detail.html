@@ -2,12 +2,10 @@
 {% load staticfiles %}
 
 {% block navbar-content %}
-    <li><a href="#">Settings</a></li>
     {% if user.is_authenticated %}
       <li class="dropdown" >
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#">Profile</a></li>
           <li role="separator" class="divider"></li>
           <li class="dropdown-header"></li>
           <li><a href="{% url 'logout' %}">Log out</a></li>
@@ -49,7 +47,7 @@
 
       <div class="row">
         <div class="col-lg-6">
-          <p>{{ app.name }}</p>
+          <p>{{ app.record.patient.name }} {{ app.record.patient.first_last_name }} {{ app.record.patient.second_last_name }}</p>
         </div>
         <div class="col-lg-6">
           <p>{{ app.phone_number }}</p>
@@ -74,6 +72,19 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-lg-12">
+          <h4>Treatment: </h4>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <p>{{ app.treatment }}</p>
+        </div>
+      </div>
+       <br>
+      <a class="btn btn-success btn-xs" style="width: 20%" href="{% url 'list_appointments' %}">Back</a>
     </div>
   </div>
 {% endblock %}

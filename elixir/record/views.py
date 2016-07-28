@@ -13,7 +13,7 @@ from django_filters import FilterSet, CharFilter
 
 from django.shortcuts import get_object_or_404
 
-from patient.models import Record, Patient
+from patient.models import Record, Patient, Note
 
 class RecordFilter(FilterSet):
   name = CharFilter(name='name', lookup_type= 'icontains')
@@ -32,6 +32,25 @@ def record_list(request):
     qs = Patient.objects.all().order_by(ordering)
   f =  RecordFilter(request.GET, queryset = qs)
   return render(request, 'record/record_view.html', { "object_list": f })
+
+
+class NoteFilter(FilterSet):
+  record = CharFilter(name='record', lookup_type= 'icontains')
+  class Meta:
+    model = Patient
+    fields = [
+      'record',
+    ]
+
+def note_list(request):
+  qs = Note.objects.all()
+  ordering = request.GET.get("ordering")
+  if ordering:
+    qs = Note.objects.all().order_by(ordering)
+  f =  NoteFilter(request.GET, queryset = qs)
+  return render(request, 'record/note_view.html', { "object_list": f })
+
+
 
 class FilterMixin(object):
   filter_class = None
@@ -103,13 +122,48 @@ class RecordUpdateView(SuccessMessageMixin, UpdateView):
 
 class RecordDeleteView(DeleteView):
     model = Record
-    success_url = reverse_lazy('dash')
+    success_url = reverse_lazy('menu')
 
 
+class CreateNoteView(CreateView):
+    model = Note
+    template_name = 'record/add_note.html'
+    fields = ['received_Place','received_State','service_Food','returned_Type','diaper','evacuations','milk','snack', 'hygiene', 'comments']
+    success_message = 'Note successfully created.'
+    success_url = reverse_lazy('menu')
 
-#def new_patient(request):
-#	if not request.user.is_authenticated():
-#		return redirect("/login")
-#if request.user.type == 'professor':
-#	return redirect('/dashboard')
-#	return render_to_response('../templates/patient/new_patient.html', context_instance=RequestContext(request))
+    def form_valid(self, form):
+      form.instance.record = Record.objects.get(id = self.kwargs["pk"])
+      form.save()
+      return super(CreateNoteView, self).form_valid(form)
+
+
+class NoteSearchView(FilterMixin, ListView):
+    template_name = 'record/note_view.html'
+    model = Note
+    filter_class = NoteFilter
+
+    
+    def get_context_data(self, *args, **kwargs):
+      context = super(NoteSearchView, self).get_context_data(*args, **kwargs)
+      context["query"] = self.request.GET.get("q")
+      context["record"] = self.kwargs["pk"]
+      return context
+    
+    def get_queryset(self, *args, **kwargs):
+      qs = super(NoteSearchView, self).get_queryset(*args, **kwargs)
+      # query = self.request.GET.get("q")
+      # if query:
+      #   qs = self.model.objects.filter(
+      #     Q(name__icontains = query)
+      #     )
+      record = Record.objects.get(id = self.kwargs["pk"])
+      qs = Note.objects.filter(record = record)
+
+      return qs
+
+class NoteDetailView(DetailView):
+    model = Note
+    template_name = 'record/note_detail.html'
+    context_object_name = 'note'
+    

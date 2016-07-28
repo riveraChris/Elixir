@@ -14,10 +14,6 @@ body {
   background-color: #ECF0F1;
 }
 
-#name{
-  width: 17%;
-  height: 90%;
-}
 
 /*
  * Global add-ons
@@ -34,11 +30,11 @@ body {
  */
 .navbar-fixed-top {
   border: 0;
-  background-color: #FFFFFF;
+  background-color: #1A2732;
 }
 
 a {
-    color: #3A3A3A;
+    color: #FFFFFF;
 }
 
 /*
@@ -48,7 +44,7 @@ a {
 /* Hide for mobile, show later */
 .sidebar {
   display: none;
-  background-color: #2E6EA4 !important;
+  background-color: #1A2732 !important;
 }
 @media (min-width: 768px) {
   .sidebar {

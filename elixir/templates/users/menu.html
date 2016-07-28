@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+  {% if user.is_authenticated %}
     <nav class="navbar navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -16,24 +17,34 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url 'dash' %}"><img src="{% static 'imgs/elixir_name.png' %}" class="img-responsive" id="name"></a>
+          <a class="navbar-brand" id="brand" href="{% url 'menu' %}"><img src="{% static 'imgs/manitas.png' %}" class="img-responsive" id="name"></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Settings</a></li>
-              {% if user.is_authenticated %}
-                <li class="dropdown" >
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Profile</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li class="dropdown-header"></li>
-                    <li><a href="{% url 'logout' %}">Log out</a></li>
-                  </ul>
-                </li>
-                {% else %}
-                <li><a href="{% url 'login' %}">Login</a></li>
-              {% endif %}
+            <form class="navbar-form navbar-left" role="search" id='searchform' action="{% url 'view_record' %}">
+              <div class="form-group">
+                <input type="text" name="name" class="form-control" placeholder="Search">
+              </div>
+              <button type="submit" class="btn btn-success">Search</button>
+            </form>
+
+    <script type="text/javascript">
+      $(function(){
+      $("name").keyup(function(event){
+        if(event.which == 13){
+          document.searchform.submit();
+          }
+      });
+
+    </script>
+
+            <li class="dropdown" >
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-header"></li>
+                <li><a href="{% url 'logout' %}?next={{request.path}}">Log out</a></li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
@@ -46,24 +57,56 @@
         <div class="row">
           <center><img src="{% static 'imgs/slogan.png' %}" class="img-responsive" alt="Image" id="slogan"></center>      
         </div>
-        <br>
-        <br>
+        <hr>
+        {% if not object_list %}
+           <p><strong>No upcoming appointments.</strong>
+        {% else %}
         <div class="row">
-          <div class="col-lg-4">
+          <p>Today's Patients Appointments:</p>
+        </div>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone number</th>
+                <th>Time</th>
+                <th>Doctor</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for app in object_list %}
+                <tr>
+                  <td>{{ app.record }}</td>
+                  <td>{{ app.phone_number }}</td>
+                  <td>{{ app.time }}</td>
+                  <td>{{ app.record.patient.doctor }}</td>
+                  <td>
+                    <a class="btn btn-info btn-xs" href="{% url 'view_appointment' app.pk %}">Detail</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% endif %}
+          <hr>
+          <br>
+          <br>
+        <div class="row" id="options">
+          <div class="col-lg-3 col-xs-3">
             <center><a href="{% url 'new_patient' %}"><img src="{% static 'imgs/addbtn.png' %}" class="img-responsive" alt="Image" id="add"></a></center>   
           </div>
-          <div class="col-lg-4">
-            <center><a href="{% url 'view_record' %}"><img src="{% static 'imgs/searchbtn.png' %}" class="img-responsive" alt="Image" id="search"></a></center>
+          <div class="col-lg-3 col-xs-3">
+            <center><a href="{% url 'record_menu' %}"><img src="{% static 'imgs/searchbtn.png' %}" class="img-responsive" alt="Image" id="search"></a></center>
           </div>
-          <div class="col-lg-4">
+          <div class="col-lg-3 col-xs-3">
             <center><a href="{% url 'new_appointment' %}"><img src="{% static 'imgs/appbtn.png' %}" class="img-responsive" alt="Image" id="app"></a></center>   
+          </div>
+          <div class="col-lg-3 col-xs-3">
+            <center><a href="{% url 'app_menu' %}"><img src="{% static 'imgs/searchapp.png' %}" class="img-responsive" alt="Image" id="app"></a></center>   
           </div>
         </div>
       </div>
     </div>
-      
-    
-
 
 
     <!-- Bootstrap core JavaScript
@@ -76,6 +119,22 @@
     <script src="../../assets/js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    {% else %}
+    <center>
+      <div style="width: 50% " class="jumbotron">
+        <div class="container">
+          <img src="{% static 'imgs/slogan.png' %}" class="img-responsive" id="name">
+          <hr>
+          <h2>Go to login.</h2>
+          <br>
+          <p>
+            <a style="width: 40%" class="btn btn-success btn-lg" href="{% url 'login' %}" >login</a>
+          </p>
+        </div>
+      </div>
+    </center>
+    {% endif %}
 
 {% endblock %}
 

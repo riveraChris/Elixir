@@ -15,7 +15,7 @@
           <li><a href="#">Profile</a></li>
           <li role="separator" class="divider"></li>
           <li class="dropdown-header"></li>
-          <li><a href="{% url 'logout' %}">Log out</a></li>
+          <li><a href="{% url 'logout' %}?next={{request.path}}">Log out</a></li>
         </ul>
       </li>
       {% else %}
@@ -24,7 +24,7 @@
   {% endblock navbar-content %}
   
   {% block sidebar-content %}
-    <li class="active"><a href="{% url 'dash' %}">Dashboard<span class="sr-only">(current)</span></a></li>
+    <li class="active"><a href="{% url 'menu' %}">Dashboard<span class="sr-only">(current)</span></a></li>
     <hr>
     <li><a href="{% url 'new_patient' %}">New Patient</a></li>
     <li><a href="{% url 'view_record'%}">Patients List</a></li>

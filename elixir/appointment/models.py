@@ -8,13 +8,15 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from timezone_field import TimeZoneField
 
+from patient.models import Record
+
 
 import arrow
 
 
 @python_2_unicode_compatible
 class Appointment(models.Model):
-    name = models.CharField(max_length=150)
+    record = models.ForeignKey(Record)
     phone_number = models.CharField(max_length=15)
     time = models.DateTimeField()
     time_zone = TimeZoneField(default='America/Puerto_Rico')

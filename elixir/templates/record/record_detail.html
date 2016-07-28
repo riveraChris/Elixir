@@ -1,13 +1,14 @@
 {% extends "dashboard.html" %}
 {% load staticfiles %}
 
+
 {% block navbar-content %}
-    <li>
-      <form class="navbar-form" id='searchform'>
-        <input type="text" name="name" id="name" style="width: 150px" placeholder="Search Patient">
-        <button type="submit" class="btn btn-primary">Search</button>
-      </form> 
-    <li>
+     <form class="navbar-form navbar-left" role="search" id='searchform' action="{% url 'view_record' %}">
+        <div class="form-group">
+          <input type="text" name="name" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-success">Search</button>
+      </form>
 
     <script type="text/javascript">
       $(function(){
@@ -16,14 +17,11 @@
           document.searchform.submit();
           }
       });
-
     </script>
 
-    <li><a href="#">Settings</a></li>
-    <li><a href="#">Profile</a></li>
     {% if user.is_authenticated %}
       <li class="dropdown" >
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.first_name }}{{user.last_name}} <span class="caret"></span></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li role="separator" class="divider"></li>
           <li class="dropdown-header"></li>
@@ -45,33 +43,43 @@
 
 
 {% block fluid-content %}
-      
+  <div class="row">
+    <h4 style="color: #95a5a6">#Record: {{ record.id }}</h4>
+  </div>
     <div class="jumbotron">
-      <div class="container">
-        <h2>{{ record.patient.name }} {{ record.patient.first_last_name }} {{ record.patient.second_last_name }}</h2>
-       
-        <hr>
+      <div class="container"> 
+        <div class="row" style="background-color: #e74c3c ">
+          <center><h2 style="color: #FFFFFF ">{{ record.patient.name }} {{ record.patient.first_last_name }} {{ record.patient.second_last_name }}</h2>  </center>
+        </div>
+        <hr>   
+        <div class="row">
+          <center><p>Medical Insurance Information</p></center>
+        </div>
         <br>
-
         <div class="row" >
           <div class="col-lg-6" >
-            <h4> Medical Insurance </h4>
+            <center><h4> Medical Insurance </h4></center>
           </div>
           <div class="col-lg-6" >
-            <h4> Insurance Number </h4>
+            <center><h4> Insurance Number</h4></center>
           </div>
         </div>
 
         <div class="row" >
           <div class="col-lg-6" >
-            <p> {{ record.medical_plan_name }} </p>
+            <center><p> {{ record.medical_plan_name }} </p></center>
           </div>
           <div class="col-lg-6" >
-            <p> {{ record.medical_plan_number }} </p>
+            <center><p> {{ record.medical_plan_number }} </p></center>
           </div>
         </div>
-
+        <hr>
+        <div class="row">
+          <center><p>Personal Information</p></center>
+        </div>
+        <br>
          <div class="row" >
+         <center>
           <div class="col-lg-3" >
             <h4> Age </h4>
           </div>
@@ -84,11 +92,13 @@
           <div class="col-lg-3" >
             <h4> Weight </h4>
           </div>
+          </center>
         </div>
 
         <div class="row" >
+          <center>
           <div class="col-lg-3" >
-            <p> {{ record.patient.age }} </p>
+            <p id="age"> </p>
           </div>
           <div class="col-lg-3" >
             <p> {{ record.patient.sex }} </p>
@@ -99,8 +109,42 @@
           <div class="col-lg-3" >
             <p> {{ record.weight }} </p>
           </div>
+          </center>
         </div>
-
+        <div class="row" >
+         <center>
+          <div class="col-lg-3" >
+            <h4>Address</h4>
+          </div>
+          </center>
+        </div>
+        <div class="row" >
+          <div class="col-lg-12 col-lg-offset-1" >
+            <p>{{ record.patient.address1 }} 
+            {{ record.patient.address2 }}
+            {{ record.patient.city }},
+            {{ record.patient.state }}.
+            {{ record.patient.zipcode }}
+            </p>
+          </div>
+        <div class="row" >
+         <center>
+          <div class="col-lg-3" >
+            <h4>Phone</h4>
+          </div>
+          </center>
+        </div>
+        <div class="row" >
+          <div class="col-lg-12 col-lg-offset-1" >
+            <p>{{ record.patient.phone }} </p>
+          </div>
+        </div>
+        </div>
+        <hr>
+        <div class="row">
+          <center><p>Additional Information</p></center>
+        </div>
+        <br>
         <div class="row" >
           <div class="col-lg-12" >
             <h4> Conditions: </h4>
@@ -127,7 +171,7 @@
 
         <div class="row" >
           <div class="col-lg-12" >
-            <h4> More Info: </h4>
+            <h4> Comments: </h4>
           </div>
         </div>
 
@@ -142,18 +186,60 @@
           {% endif %}
           </div>
         </div>
+
+        <div class="row" >
+          <div class="col-lg-6" >
+            <h4> Doctor: </h4>
+          </div>
+          <div class="col-lg-6" >
+            <h4> Phone: </h4>
+          </div>
+        </div>
+
+        <div class="row" >
+          <div class="col-lg-12" >
+          {% if not record.patient.doctor %}
+            <p> There's no Doctor assigned to this patient. </p>
+            {% else %}
+              <div class="col-lg-6" >
+                <p>{{ record.patient.doctor }} ( {{ record.patient.doctor.specialist }} )</p>
+              </div>
+               <div class="col-lg-6" >
+                <p>{{ record.patient.doctor.phone }}</p>
+              </div>
+          {% endif %}
+          </div>
+        </div>
+
         <br>
         <br>
         <div class="row" >
           <div class="pull-right">
-            <h5> This record was created by: {{ record.created_By }}</h5>
+            <h5> Created by: {{ record.created_By }}</h5>
             {% if not record.modified_By %}
               {% else %}
                 <h5> and modified by: {{ record.modified_By }}</h5>
             {% endif %}
           </div>
         </div>
+          <a style="width: 20% " href="{% url 'view_record' %}" class="btn btn-success">Back</a>
       </div>
     </div>
+
+    <script>
+
+    function getAge(dateString) {
+        var today = new Date();
+        var birthDate = new Date(dateString);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        return age;
+      }  
+      document.getElementById("age").innerHTML = getAge('{{ record.patient.birthdate }}');
+
+  </script>
 
 {% endblock %}

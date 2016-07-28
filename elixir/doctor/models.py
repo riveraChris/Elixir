@@ -15,6 +15,7 @@ class Doctor(models.Model):
 	state = models.CharField(max_length = 2, blank=True, null=True)
 	zipcode = models.PositiveIntegerField(blank=True, null=True)
 	phone = models.CharField(max_length = 20, blank=True, null=True)
+	specialist = models.CharField(max_length = 20, blank=True, null=True)
 	
 	def __str__(self):
 		return self.name + ' ' + self.first_last_name

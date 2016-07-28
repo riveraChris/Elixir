@@ -43,7 +43,7 @@ DJANGO_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
 )
 
 THIRD_PARTY_APPS = (
@@ -53,6 +53,8 @@ THIRD_PARTY_APPS = (
     'django_extensions',
     'django_filters',
     'annoying',
+    'registration',
+    'crispy_forms',
 )
 
 LOCAL_APPS = (
@@ -131,7 +133,19 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-LOGIN_REDIRECT_URL = '/menu'
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'rivera2527@gmail.com'
+DEFAULT_FROM_EMAIL = 'rivera2527@gmail.com'
+SERVER_EMAIL = 'rivera2527@gmail.com'
+EMAIL_HOST_PASSWORD = 'Labs2527'
+
+LOGIN_REDIRECT_URL = '/hipaa'
 
 MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'

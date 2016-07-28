@@ -12,4 +12,6 @@ urlpatterns = [
     # Include the Django admin
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('django.contrib.auth.urls')),
+    url(r'^logout/$', 'django.contrib.auth.views.logout',
+                          {'next_page': '/menu'}, name='logout')
 ]

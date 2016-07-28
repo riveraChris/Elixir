@@ -3,12 +3,10 @@
 {% load bootstrap_tags %}
 
  {% block navbar-content %}
-    <li><a href="#">Settings</a></li>
     {% if user.is_authenticated %}
       <li class="dropdown" >
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#">Profile</a></li>
           <li role="separator" class="divider"></li>
           <li class="dropdown-header"></li>
           <li><a href="{% url 'logout' %}">Log out</a></li>
@@ -47,7 +45,6 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Phone number</th>
                 <th>Time</th>
@@ -56,16 +53,15 @@
               </tr>
             </thead>
             <tbody>
-              {% for appointment in object_list %}
+              {% for app in object_list %}
                 <tr>
-                  <td><a href="{{ appointment.get_absolute_url }}">{{ appointment.pk }}</a></td>
-                  <td>{{ appointment.Patient }}</td>
-                  <td>{{ appointment.phone_number }}</td>
-                  <td>{{ appointment.time }}</td>
-                  <td>{{ appointment.created }}</td>
+                  <td>{{ app.record.patient.name }} {{ app.record.patient.first_last_name }} {{ app.record.patient.second_last_name }}</td>
+                  <td>{{ app.phone_number }}</td>
+                  <td>{{ app.time }}</td>
+                  <td>{{ app.created }}</td>
                   <td>
-                    <a class="btn btn-default btn-xs" href="{% url 'edit_appointment' appointment.pk %}">Edit</a>
-                    <a class="btn btn-xs btn-danger" href="{% url 'delete_appointment' appointment.pk %}">Delete</a>
+                    <a class="btn btn-success btn-xs" href="{% url 'edit_appointment' app.pk %}">Edit</a>
+                    <a class="btn btn-warning btn-xs" href="{% url 'view_appointment' app.pk %}">Detail</a>
                   </td>
                 </tr>
               {% endfor %}
