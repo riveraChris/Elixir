@@ -1,0 +1,173 @@
+{% extends "dashboard.html" %}
+{% load staticfiles %}
+
+{% block navbar-content %}
+    <form class="navbar-form navbar-left" role="search" id='searchform' action="{% url 'view_record' %}">
+        <div class="form-group">
+          <input type="text" name="name" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-success">Search</button>
+      </form>
+
+    <script type="text/javascript">
+      $(function(){
+      $("name").keyup(function(event){
+        if(event.which == 13){
+          document.searchform.submit();
+          }
+      });
+
+    </script>
+
+    {% if user.is_authenticated %}
+      <li class="dropdown" >
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li role="separator" class="divider"></li>
+          <li class="dropdown-header"></li>
+          <li><a href="{% url 'logout' %}">Log out</a></li>
+        </ul>
+      </li>
+      {% else %}
+      <li><a href="{% url 'login' %}">Login</a></li>
+    {% endif %}
+  {% endblock navbar-content %}
+  
+  {% block sidebar-content %}
+    <br>
+    <li><a href="{% url 'new_patient' %}">New Patient</a></li>
+    <li class="active"><a href="{% url 'view_record'%}">Patients List<span class="sr-only">(current)</span></a></li>
+    <li><a href="{% url 'new_appointment'%}">New Appointment</a></li>
+    <li><a href="{% url 'list_appointments'%}">Appointment List</a></li>
+  {% endblock sidebar-content %}
+
+
+{% block fluid-content %}
+      
+    <div class="jumbotron">
+      <div class="container">
+        <div class="row" style="background-color: #e74c3c ">
+          <center><h2 style="color: #FFFFFF ">{{ note.record.patient.name }} {{ note.record.patient.first_last_name }} {{ note.record.patient.second_last_name }}</h2>  </center>
+        </div>
+       
+        <hr>
+        <br>
+
+        <div class="row" >
+          <div class="col-lg-6" >
+            <h4> Recieved at: </h4>
+          </div>
+          <div class="col-lg-6" >
+            <h4>Recieved State: </h4>
+          </div>
+        </div>
+
+        <div class="row" >
+          <div class="col-lg-6" >
+            <p> {{ note.received_Place }} </p>
+          </div>
+          <div class="col-lg-6" >
+            <p> {{ note.received_State}} </p>
+          </div>
+        </div>
+
+         <div class="row" >
+          <div class="col-lg-6" >
+            <h4>Food Provied</h4>
+          </div>
+          <div class="col-lg-6" >
+            <h4>Return at:</h4>
+          </div>
+        </div>
+
+        <div class="row" >
+          <div class="col-lg-6" >
+            <p> {{ note.service_Food }} </p>
+          </div>
+          <div class="col-lg-6" >
+            <p> {{ note.returned_Type }} </p>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-2" >
+            <h4>Diapers?</h4>
+          </div>
+
+          <div class="col-lg-2" >
+            <h4>Evacuations?</h4>
+          </div>
+
+          <div class="col-lg-2 col-lg-offset-1">
+           <h4>Drink Milk?</h4>
+          </div>
+
+          <div class="col-lg-3" >
+            <h4>Eat some snaks?</h4>
+          </div>
+
+          <div>
+           <h4 class="col-lg-2">Hygiene</h4>
+          </div>
+
+        </div>
+
+          <div class="row" >
+
+            <div class="col-lg-2" >
+              <p> {{ note.diaper }} </p>
+            </div>
+
+            <div class="col-lg-2" >
+              <p> {{ note.evacuations}} </p>
+            </div>
+
+            <div class="col-lg-2 col-lg-offset-1" >
+              <p> {{ note.diaper }} </p>
+            </div>
+
+            <div class="col-lg-3" >
+              <p> {{ note.evacuations}} </p>
+            </div>
+
+            <div class="col-lg-2" >
+              <p> {{ note.diaper }} </p>
+            </div>
+
+          </div>
+
+        <br>
+          <div class="row">
+            <div class="col-lg-2" >
+              <h4> Comments: </h4>
+            </div>
+          </div>
+        
+        <div class="row" >
+          <div class="col-lg-12" >
+          {% if not note.comments %}
+            <p> There's no aditional info </p>
+            {% else %}
+              <div class="col-lg-12" >
+                <p>{{ note.comments }}</p>
+              </div>
+          {% endif %}
+          </div>
+        </div>
+        <br>
+        <br>
+        <div class="row" >
+          <div class="pull-right">
+            <h5> Created by: {{ note.record.created_By }}</h5>
+            {% if not record.modified_By %}
+              {% else %}
+                <h5> and modified by: {{ note.record.modified_By }}</h5>
+            {% endif %}
+          </div>
+        </div>
+        <a style="width: 20%" href="{% url 'view_note' note.record.pk %}" class="btn btn-success">Back</a>
+      </div>
+    </div>
+
+{% endblock %}

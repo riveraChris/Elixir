@@ -1,0 +1,38 @@
+
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block page_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+  {% if errors in messages%}
+    <div class="alert alert-dismissable alert-danger">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Oh snap!</strong> {{ errors }}
+    </div>
+  {% endif %}
+
+  <div class="jumbotron Absolute-Center">
+    <div class="container">
+       <div>
+          <center><h3>User Registration:</h3></center>
+          <hr>
+          <br>
+          <form class = "form" name = "registrationForm" action="." method="POST" role="form" id="form">
+            {% csrf_token %}
+            <div id="form">{{ form.as_p }}</div>
+            <br><br><br>     
+            <center><button type="submit" class="btn btn-success" id="btn">Register</button></center>
+          </form>
+        </div>  
+    </div>
+  </div>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+{% endblock %}

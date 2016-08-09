@@ -1,0 +1,32 @@
+body {
+    background-image: url("../imgs/background.png");
+    color: #3A3A3A;
+    font-size: 8 !important; 
+}
+
+
+.jumbotron{
+background-color: #FFFFFF !important;
+/*background-color:none !important;*/
+}
+
+.Center-Container {
+  position: relative;
+}
+
+.Absolute-Center {
+  width: 75%;
+  height: 95%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+#btn{
+	width: 40%;
+}
+
+#form{
+	font-size: 11;
+}

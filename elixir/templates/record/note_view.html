@@ -1,0 +1,87 @@
+{% extends "dashboard.html" %}
+
+{% block navbar-content %}
+    <form class="navbar-form navbar-left" role="search" id='searchform' action="{% url 'view_record' %}">
+        <div class="form-group">
+          <input type="text" name="name" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-success">Search</button>
+      </form>
+
+    <script type="text/javascript">
+      $(function(){
+      $("name").keyup(function(event){
+        if(event.which == 13){
+          document.searchform.submit();
+          }
+      });
+
+    </script>
+    {% if user.is_authenticated %}
+      <li class="dropdown" >
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li role="separator" class="divider"></li>
+          <li class="dropdown-header"></li>
+          <li><a href="{% url 'logout' %}">Log out</a></li>
+        </ul>
+      </li>
+      {% else %}
+      <li><a href="{% url 'login' %}">Login</a></li>
+    {% endif %}
+  {% endblock navbar-content %}
+  
+  {% block sidebar-content %}
+    <br>
+    <li><a href="{% url 'new_patient' %}">New Patient</a></li>
+    <li class="active"><a href="{% url 'view_record'%}">Patients List<span class="sr-only">(current)</span></a></li>
+    <li><a href="{% url 'new_appointment'%}">New Appointment</a></li>
+    <li><a href="{% url 'list_appointments'%}">Appointment List</a></li>
+  {% endblock sidebar-content %}
+
+
+{% block fluid-content %}
+    
+    {% if not object_list %}
+      <p><strong>There's no records to show.</strong><a href="{% url 'new_patient' %}">Create one?</a>
+    {% endif %}
+      <div class="row" >
+        <div class="col-lg-12">
+          <h2>List of Notes:</h2>
+        </div>
+      </div>
+      <br>
+      <div class="jumbotron">
+        <div class="container">
+          <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Date</th>
+                  <th>Created By</th>
+                  <th>Doctor</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for note in object_list %}
+                  <tr>
+                    <td>{{ note.record}}</td>
+                    <td>{{ note.created_dt }}</td>
+                    <td>{{ note.record.created_By }}</td>
+                    <td>{{ note.record.patient.doctor }}</td>
+                    <td>
+                      <a class="btn btn-xs btn-success" href="{% url 'detail_note' note.pk %}">Details</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <hr>
+            <br>
+            <div class="col-lg-12 col-lg-offset-8">
+              <a href="{% url 'view_record' %}" class="btn btn-default">Back</a>
+              <a class="btn btn-primary" href="{% url 'add_note' record %}">Create Note</a>
+            </div>
+        </div>
+      </div>
+{% endblock %}

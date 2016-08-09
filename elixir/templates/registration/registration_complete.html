@@ -1,0 +1,32 @@
+
+{% extends 'base.html'%}
+{% load staticfiles %}
+
+{% block page_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+  {% if errors in messages%}
+    <div class="alert alert-dismissable alert-danger">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Oh snap!</strong> {{ errors }}
+    </div>
+  {% endif %}
+  <div class="jumbotron Absolute-Center">
+    <div class="container">
+       <div class="row">
+          <h3>You registration has been completed.</h3>
+        </div> 
+        <div class="row">
+          <p>Now! you need go to your email to activate the account.</p>
+        </div>
+        <button type="button" class="btn btn-default"><a href="{% url 'login' %}">Login</a></button>
+    </div>
+  </div>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+
+{% extends 'base.html'%}
+{% load staticfiles %}
+
+{% block page_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/hipaa.css' %}">
+{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    <center><img src="{% static 'imgs/slogan.png' %}" class="img-responsive" alt="Image" id="slogan"></center>      
+    <br><br>
+    <div class="jumbotron">
+      <div class="container">
+        <div class="row">
+          <center><h2>Ley HIPAA</h2></center>
+        </div>
+        <hr>
+        <div class="row">
+          <p>Para hacer uso de ELIXIR Health Solution es necesario conocer la ley federal Health Insurance Portability and Accountability Act (HIPPA) del 1996 requiere que se le notifique al paciente la política de privacidad y confidencialidad de la entidad u oficina y que se evidencie dicha notificación.  La Carta de Derecho y Obligaciones del Paciente requiere que para poder proveer nuestros servicios debemos obtener el consentimiento de los pacientes para utilizar y divulgar su información de salud protegida para propósitos de tratamiento, pago y otras transacciones para el cuidado de la salud que lleva a cabo nuestro hogar.</p>
+        </div>
+        <br>
+        <div class="row pull-right">
+          <a class="btn btn-default btn-lg" href="{% url 'login' %}" >Cancel</a>
+          <a class="btn btn-success btn-lg" href="{% url 'menu' %}" >Agree</a>
+        </div>
+      </div>
+    </div>
+    {% else %}
+      <div class="jumbotron Absolute-Center">
+        <div class="container">
+          <h2>You need to login to your account.</h2>
+          <p>If don't have an account, go to the administrator.</p>
+          <p>
+            <a class="btn btn-primary btn-lg" href="{% url 'login' %}" >login</a>
+          </p>
+        </div>
+      </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block page_js %}
+{% endblock %}
+
