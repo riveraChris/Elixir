@@ -1,24 +1,29 @@
-# Requirements for the appointments Django project
-
-# Django (1.8 is a long-term support release)
-Django==1.8
-
-# Third-party app dependencies
+amqp==1.4.9
+anyjson==0.3.3
 arrow==0.5.4
-celery[redis]==3.1.18
-django-bootstrap3==5.4.0
-django-forms-bootstrap==3.0.1
-django-timezone-field==1.2
-psycopg2==2.6
-twilio==4.4.0
-whitenoise==1.0.6
-
-# Production dependencies
-dj-database-url==0.3.0
-gunicorn==19.3.0
-
-# Test dependencies
+billiard==3.3.0.23
+celery==3.1.18
 coverage==3.7.1
+dj-database-url==0.3.0
+Django==1.8
+django-annoying==0.9.0
+django-bootstrap3==5.4.0
+django-crispy-forms==1.6.0
+django-extensions==1.7.1
+django-filter==0.13.0
+django-forms-bootstrap==3.0.1
+django-registration==2.1.2
+django-timezone-field==1.2
+extensions==0.4
+gunicorn==19.3.0
+httplib2==0.9.2
+kombu==3.0.35
 mock==1.0.1
 model-mommy==1.2.4
+psycopg2==2.6
+python-dateutil==2.5.3
+pytz==2016.6.1
+redis==2.10.5
 six==1.9.0
+twilio==4.4.0
+whitenoise==1.0.6
